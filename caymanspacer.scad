@@ -8,36 +8,60 @@ module prism(l, w, h){
        
 }
 
-    l = 60;
-    w = 20;
-    h = 2;
+    l = 67;
+    w = 36;
+    thickness = 4;
     r=w/2;
+    recessDepth=4;
+    chamferLength=4;
     
-    color("red")
-        translate([0, 0, 0])
-            cube([l, w,h], center = true);
-
-// using the scale parameter a frustum can be constructed
-    color("cyan"){
-        translate([l/2, 0, 0])
-        cylinder(h,r,r, center = true);
-    }
-
-    color("cyan"){
-        translate([-l/2, 0, 0])
-        cylinder(h,r,r, center = true);
-    }
-
-    color("blue") 
-        translate([-10,-w/2,-h])
-        rotate(90)
-        prism(w,4,2, center=true);
-    
-    color("blue") 
-        translate([10,w/2,-h])
-        rotate(-90)
-        prism(w,4,2, center=true);
         
+    union() {
+
+    color("red")
+            translate([-l/2, -w/2, 0])
+            cube([(l-20)/2-chamferLength, w,thickness] );
+
+    color("red")
+// figure out where 1.5 came frome        
+            translate([l/2-r-1.5, -w/2, 0])
+            cube([(l-20)/2-chamferLength, w,thickness] );
+   
+        // make the end round pieces   
+    color("cyan")
+        translate([l/2, 0, 0])
+        cylinder(thickness,r,r);
+    
+
+    color("cyan")
+        translate([-l/2, 0, 0])
+        cylinder(thickness,r,r);
+   
+    color("blue") 
+        translate([-10,-w/2,0])
+        rotate(90)
+        prism(w,chamferLength,recessDepth);
+     
+    color("blue") 
+        translate([-10-thickness,-w/2,0])
+        rotate(90)
+        prism(w,-chamferLength,-recessDepth);   
+    
+    color("blue") 
+        translate([10,w/2,0])
+        rotate(-90)
+        prism(w,chamferLength,recessDepth);
+         
+    color("blue") 
+        translate([10+thickness,w/2,0])
+        rotate(-90)
+        prism(w,-chamferLength,-recessDepth); 
+    color("gray")
+            translate([-10, -w/2, -thickness])
+            cube([(20), w,thickness] );
+   }
+
+
 
 // Written in 2015 by Torsten Paul <Torsten.Paul@gmx.de>
 //
