@@ -1,0 +1,17 @@
+{
+    "parameterSets": {
+        "initial values": {
+            "$fn": "30",
+            "DentDepth": "3",
+            "DentLengthBottom": "9",
+            "DentLengthTop": "20",
+            "HoleDiameter": "8",
+            "HoleDistance": "50",
+            "PartChamfer": "10",
+            "PartLength": "67",
+            "PartThickness": "5",
+            "PartWidth": "36"
+        }
+    },
+    "fileFormatVersion": "1"
+}
