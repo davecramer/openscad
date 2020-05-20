@@ -15,28 +15,45 @@ DentLengthTop = 20.1;
 DentLengthBottom = 9.1;
 DentDepth = 3.1;
 
-union() {
-    difference() {
-	// Take the main profile
-	Z_profile();
-	// cut out the indented center and the holes for the bolts
-	union() {
-	    translate([0, 0, PartThickness / 2])
-		cube(size=[PartWidth + 0.02, DentLengthTop, PartThickness + 0.2],
-		     center = true);
-	    Holes();
+/* [2D:] */
+Projections = false; // [true, false]
+
+if (Projections) {
+    projection(cut = false)
+    Spacer();
+
+    projection(cut = false)
+    translate([40, 0, 0])
+    rotate([0, 270, 0])
+    Spacer();
+} else {
+    Spacer();
+}
+
+module Spacer() {
+    union() {
+	difference() {
+	    // Take the main profile
+	    Z_profile();
+	    // cut out the indented center and the holes for the bolts
+	    union() {
+		translate([0, 0, PartThickness / 2])
+		    cube(size=[PartWidth + 0.02, DentLengthTop, PartThickness + 0.2],
+			 center = true);
+		Holes();
+	    }
 	}
-    }
 
-    // Add the flat bottom part
-    translate([0, 0, PartThickness / 2 - DentDepth])
-	cube(size=[PartWidth, DentLengthBottom, PartThickness], center=true);
+	// Add the flat bottom part
+	translate([0, 0, PartThickness / 2 - DentDepth])
+	    cube(size=[PartWidth, DentLengthBottom, PartThickness], center=true);
 
 
-    // Add the angled pieces
-    Angle_part();
-    mirror([0, 180, 0])
+	// Add the angled pieces
 	Angle_part();
+	mirror([0, 180, 0])
+	    Angle_part();
+    }
 }
 
 module Angle_part() {
